@@ -34,8 +34,7 @@ namespace Business.Concrete
         [CacheRemoveAspect("IProductService.Get")]
         public IResult Add(Product product)
         {
-            IResult result = BusinessRules.Run(CheckIfProductCountOfCategoryCorrect(product.CategoryId),
-                  CheckIfProductNameExists(product.ProductName), CheckIfCategoryLimitExceded());
+            IResult result = BusinessRules.Run(CheckIfProductNameExists(product.ProductName), CheckIfCategoryLimitExceded());
 
             if (result != null)
             {
@@ -51,7 +50,7 @@ namespace Business.Concrete
         [CacheAspect]
         public IDataResult<List<Product>> GetAll()
         {
-            if (DateTime.Now.Hour == 17)
+            if (DateTime.Now.Hour == 24)
             {
                 return new ErrorDataResult<List<Product>>(Messages.SystemOff);
             }
